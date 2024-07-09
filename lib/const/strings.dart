@@ -17,12 +17,28 @@ const TextStyle smallTextStyle = TextStyle(
   decoration: TextDecoration.none,
 );
 
+const TextStyle smallwhiteTextStyle = TextStyle(
+  fontSize: 13,
+  fontFamily: 'Poppins',
+  fontWeight: FontWeight.normal,
+  color: AppColor.textLight,
+  decoration: TextDecoration.none,
+);
+
 
 const TextStyle boldTextStyle = TextStyle(
   fontSize: 14,
   fontFamily: 'Poppins',
   fontWeight: FontWeight.w600,
   color: AppColor.textPrimary,
+  decoration: TextDecoration.none,
+);
+
+const TextStyle boldwhiteTextStyle = TextStyle(
+  fontSize: 14,
+  fontFamily: 'Poppins',
+  fontWeight: FontWeight.w600,
+  color: AppColor.textLight,
   decoration: TextDecoration.none,
 );
 

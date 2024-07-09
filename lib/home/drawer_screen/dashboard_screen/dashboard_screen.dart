@@ -8,7 +8,7 @@ class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
 
   static const double _sizeRatio = 0.98;
-  static const double _borderRadius = 16.0;
+  static const double _borderRadius = 75.0;
   static const double _paddingTop = 4.0;
   static const double _menuPadding = 8.0;
 
@@ -33,7 +33,8 @@ class DashboardScreen extends StatelessWidget {
             : Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(child: _buildBackgroundImage(screenWidth, screenHeight)),
+                  Expanded(
+                      child: _buildBackgroundImage(screenWidth, screenHeight)),
                   SizedBox(width: 300, child: _buildSidebar()),
                 ],
               ),
@@ -60,14 +61,15 @@ class DashboardScreen extends StatelessWidget {
           ),
           const Positioned(
             top: 20.0,
-            left: 70.0,
+            left: 25.0,
             child: Text(
               "Dashboard",
               style: largboldTextStyle,
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 28.0),
+          const SizedBox(height: 40),
+          const Padding(
+            padding: EdgeInsets.only(top: 28.0),
             child: MainScreen(),
           ),
         ],
@@ -136,18 +138,26 @@ class DashboardScreen extends StatelessWidget {
 
   Widget _buildTransactionList() {
     final transactions = [
-      _buildTransactionItem('Sent', 'Rs. 360', Colors.red, Icons.call_made, Color(0xFFFFC0C0)),
-      _buildTransactionItem('Received', 'Rs. 360', Colors.green, Icons.call_received, Color(0xFFAFFDC3)),
-      _buildTransactionItem('Received', 'Rs. 360', Colors.green, Icons.call_received, Color(0xFFAFFDC3)),
-      _buildTransactionItem('Sent', 'Rs. 360', Colors.red, Icons.call_made, Color(0xFFFFC0C0)),
-      _buildTransactionItem('Sent', 'Rs. 360', Colors.red, Icons.call_made, Color(0xFFFFC0C0)),
+      _buildTransactionItem(
+          'Sent', 'Rs. 360', Colors.red, Icons.call_made, const Color(0xFFFFC0C0)),
+      _buildTransactionItem('Received', 'Rs. 360', Colors.green,
+          Icons.call_received, const Color(0xFFAFFDC3)),
+      _buildTransactionItem('Received', 'Rs. 360', Colors.green,
+          Icons.call_received, const Color(0xFFAFFDC3)),
+      _buildTransactionItem(
+          'Sent', 'Rs. 360', Colors.red, Icons.call_made, const Color(0xFFFFC0C0)),
+      _buildTransactionItem(
+          'Sent', 'Rs. 360', Colors.red, Icons.call_made, const Color(0xFFFFC0C0)),
       const Padding(
         padding: EdgeInsets.all(16.0),
         child: Text("Yesterday", style: boldTextStyle),
       ),
-      _buildTransactionItem('Sent', 'Rs. 360', Colors.red, Icons.call_made, Color(0xFFFFC0C0)),
-      _buildTransactionItem('Sent', 'Rs. 360', Colors.red, Icons.call_made, Color(0xFFFFC0C0)),
-      _buildTransactionItem('Received', 'Rs. 360', Colors.green, Icons.call_received, Color(0xFFAFFDC3)),
+      _buildTransactionItem(
+          'Sent', 'Rs. 360', Colors.red, Icons.call_made, const Color(0xFFFFC0C0)),
+      _buildTransactionItem(
+          'Sent', 'Rs. 360', Colors.red, Icons.call_made, const Color(0xFFFFC0C0)),
+      _buildTransactionItem('Received', 'Rs. 360', Colors.green,
+          Icons.call_received, const Color(0xFFAFFDC3)),
       const Padding(
         padding: EdgeInsets.all(16.0),
         child: Text(
@@ -160,7 +170,8 @@ class DashboardScreen extends StatelessWidget {
     return ListView(children: transactions);
   }
 
-  Widget _buildTransactionItem(String subtitle, String trailing, Color iconColor, IconData icon, Color backgroundColor) {
+  Widget _buildTransactionItem(String subtitle, String trailing,
+      Color iconColor, IconData icon, Color backgroundColor) {
     return ListTile(
       leading: CircleAvatar(
         backgroundColor: backgroundColor,

@@ -7,22 +7,21 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  LayoutBuilder(
-        builder: (context, constraints) {
-          if (constraints.maxWidth < 600) {
-            // Small screen: show Drawer
-            return _buildBody(context);
-          } else {
-            // Large screen: show side panel
-            return Row(
-              children: [
-                Expanded(child: _buildBody(context)),
-              ],
-            );
-          }
-        },
-      );
-    
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        if (constraints.maxWidth < 600) {
+          // Small screen: show Drawer
+          return _buildBody(context);
+        } else {
+          // Large screen: show side panel
+          return Row(
+            children: [
+              Expanded(child: _buildBody(context)),
+            ],
+          );
+        }
+      },
+    );
   }
 
   Widget _buildBody(BuildContext context) {
@@ -36,26 +35,38 @@ class MainScreen extends StatelessWidget {
               children: <Widget>[
                 Expanded(
                   child: StatCard(
-                      // 'Total Users',
-                      ),
+                    title: 'Total Users',
+                     count: '7',
+                      subtitle: '7 Users in last week',
+                    // 'Total Users',
+                  ),
                 ),
                 SizedBox(width: 10),
                 Expanded(
                   child: StatCard(
-                      // 'Pending Seller Request',
-                      ),
+                    title: 'Pending Seller Request', 
+                    count: '26', 
+                    subtitle: '2 Pending request',
+                    // 'Pending Seller Request',
+                  ),
                 ),
                 SizedBox(width: 10),
                 Expanded(
                   child: StatCard(
-                      // 'Total Sellers',
-                      ),
+                    title: 'Total Sellers',
+                     count: '62',
+                      subtitle: '2 Sellers in last week',
+                    // 'Total Sellers',
+                  ),
                 ),
                 SizedBox(width: 10),
                 Expanded(
                   child: StatCard(
-                      // 'Total Rewards Issued',
-                      ),
+                    title: 'Total Rewards Issued',
+                     count: '04', 
+                     subtitle: 'Total rewards distributed',
+                    // 'Total Rewards Issued',
+                  ),
                 ),
               ],
             ),
@@ -81,7 +92,7 @@ class MainScreen extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 10),
+            SizedBox(height: 10),
             Row(
               children: <Widget>[
                 Expanded(
@@ -105,8 +116,7 @@ class MainScreen extends StatelessWidget {
             // _buildActionCard('Task Expired', Icons.timer_off, Colors.purple),
             // const SizedBox(height: 10),
             // _buildActionCard('Transactions', Icons.money, Colors.teal),
-            const SizedBox(height: 20),
-         
+            SizedBox(height: 20),
           ],
         ),
       ),
