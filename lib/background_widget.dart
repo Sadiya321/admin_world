@@ -1,6 +1,6 @@
 
 
-import 'package:admin_world/images.dart';
+import 'package:admin_world/const/images.dart';
 import 'package:flutter/material.dart';
 
 Widget bgWidget({

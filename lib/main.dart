@@ -1,4 +1,8 @@
-import 'package:admin_world/login_screen.dart';
+import 'package:admin_world/home/drawer_screen/home_screen.dart';
+import 'package:admin_world/home/main_screen.dart';
+import 'package:admin_world/widgets/graph_container.dart';
+import 'package:admin_world/widgets/reward_transaction_screen.dart';
+import 'package:admin_world/widgets/stat_card.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -16,14 +20,19 @@ class MyApp extends StatelessWidget {
        debugShowCheckedModeBanner: false, 
       title: 'Flutter Demo',
       theme: ThemeData(
-    
+    fontFamily: "Poppins",
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
 
 
-      home: const LoginsScreen(),
+      home:  
+      
+      // MainScreen(),
+     
+       const AdminView(
+            documentId: '',
+          ),
     );
   }
 }
-
