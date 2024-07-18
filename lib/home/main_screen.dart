@@ -1,3 +1,5 @@
+import 'package:admin_world/const/images.dart';
+import 'package:admin_world/widgets/custome_field.dart';
 import 'package:admin_world/widgets/graph_container.dart';
 import 'package:admin_world/widgets/stat_card.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +29,7 @@ class MainScreen extends StatelessWidget {
   Widget _buildBody(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding:const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -36,16 +38,16 @@ class MainScreen extends StatelessWidget {
                 Expanded(
                   child: StatCard(
                     title: 'Total Users',
-                     count: '7',
-                      subtitle: '7 Users in last week',
+                    count: '7',
+                    subtitle: '7 Users in last week',
                     // 'Total Users',
                   ),
                 ),
                 SizedBox(width: 10),
                 Expanded(
                   child: StatCard(
-                    title: 'Pending Seller Request', 
-                    count: '26', 
+                    title: 'Pending Seller Request',
+                    count: '26',
                     subtitle: '2 Pending request',
                     // 'Pending Seller Request',
                   ),
@@ -54,8 +56,8 @@ class MainScreen extends StatelessWidget {
                 Expanded(
                   child: StatCard(
                     title: 'Total Sellers',
-                     count: '62',
-                      subtitle: '2 Sellers in last week',
+                    count: '62',
+                    subtitle: '2 Sellers in last week',
                     // 'Total Sellers',
                   ),
                 ),
@@ -63,95 +65,92 @@ class MainScreen extends StatelessWidget {
                 Expanded(
                   child: StatCard(
                     title: 'Total Rewards Issued',
-                     count: '04', 
-                     subtitle: 'Total rewards distributed',
+                    count: '04',
+                    subtitle: 'Total rewards distributed',
                     // 'Total Rewards Issued',
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 20),
-            GraphWidget(),
-            const SizedBox(height: 20),
+          const  SizedBox(height: 20),
+           const GraphWidget(),
+           const SizedBox(height: 20),
             Row(
               children: <Widget>[
                 Expanded(
-                  child: _buildActionCard(
-                    'Create Task',
-                    Icons.add_task,
-                    Colors.green,
+                  child: CustomTextField(
+                     imagePath: bookstar,
+                    title: 'Create Task',
+                     title1:'Create a new task',
+                    onTap: () {
+                    
+                    },
                   ),
                 ),
-                SizedBox(width: 10),
+                const SizedBox(width: 40),
                 Expanded(
-                  child: _buildActionCard(
-                    'Seller Request',
-                    Icons.request_page,
-                    Colors.orange,
+                  child: CustomTextField(
+                     imagePath: personclock,
+                    title: 'Seller Request',
+                     title1:'2 pending request from last week',
+                    onTap: () {
+                    
+                    },
                   ),
                 ),
               ],
             ),
-            SizedBox(height: 10),
-            Row(
+            const SizedBox(height: 10),
+             const SizedBox(width: 20),
+            const Row(
               children: <Widget>[
                 Expanded(
-                  child: _buildActionCard(
-                    'Recent Task Created',
-                    Icons.task,
-                    Colors.blue,
+                  child: CustomTextField(
+                     imagePath: bookclock,
+                    title: 'Recent Task Created',
+                     title1:'12 Task created last week',
                   ),
                 ),
-                SizedBox(width: 10),
+                SizedBox(width: 40),
                 Expanded(
-                  child: _buildActionCard(
-                    'Withdrawal Request',
-                    Icons.money,
-                    Colors.red,
+                  child: CustomTextField(
+                     imagePath: bookclock,
+                    title: 'Withdrawal Request',
+                     title1:'1 pending request from last week',
                   ),
                 ),
               ],
             ),
-            // const SizedBox(height: 10),
-            // _buildActionCard('Task Expired', Icons.timer_off, Colors.purple),
-            // const SizedBox(height: 10),
-            // _buildActionCard('Transactions', Icons.money, Colors.teal),
-            SizedBox(height: 20),
+            const SizedBox(height: 10),
+            const SizedBox(width: 20),
+             Row(
+              children: <Widget>[
+                Expanded(
+                  child: CustomTextField(
+                     imagePath: bookclock,
+                    title: 'Task Expired',
+                     
+                    title1:'8 Task expired last week',
+                    onTap: () {
+                     
+                    },
+                  ),
+                ),
+               const SizedBox(width: 40),
+                Expanded(
+                  child: CustomTextField(
+                    imagePath: bookclock,
+                    title: 'Transactions',
+                    title1:'Last week transaction',
+                    onTap: () {
+                      
+                    },
+                  ),
+                ),
+              ],
+            ),
+           const SizedBox(height: 20),
           ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildActionCard(String title, IconData icon, Color color) {
-    return Card(
-      elevation: 2,
-      child: Container(
-        height: 100,
-        decoration: BoxDecoration(
-          color: color.withOpacity(0.7),
-          borderRadius: BorderRadius.circular(8),
-        ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Icon(
-                icon,
-                size: 30,
-                color: Colors.white,
-              ),
-              const SizedBox(height: 10),
-              Text(
-                title,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ],
-          ),
         ),
       ),
     );

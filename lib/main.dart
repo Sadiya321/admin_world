@@ -1,4 +1,7 @@
-import 'package:admin_world/home/drawer_screen/home_screen.dart';
+import 'package:admin_world/home/drawer_screen/admin_view.dart';
+import 'package:admin_world/home/drawer_screen/transaction_screen/transaction_screen.dart';
+import 'package:admin_world/home/drawer_screen/users_screen/users_screen.dart';
+import 'package:admin_world/home/login_screen/login_screen.dart';
 import 'package:admin_world/home/main_screen.dart';
 import 'package:admin_world/widgets/graph_container.dart';
 import 'package:admin_world/widgets/reward_transaction_screen.dart';
@@ -26,13 +29,13 @@ class MyApp extends StatelessWidget {
       ),
 
 
-      home:  
+      home: LoginsScreen(), 
       
-      // MainScreen(),
      
-       const AdminView(
-            documentId: '',
-          ),
+     
+      //  const AdminView(
+      //       documentId: '',
+      //     ),
     );
   }
 }

@@ -1,8 +1,10 @@
+import 'package:admin_world/widgets/reward_transaction_screen.dart';
+import 'package:flutter/material.dart';
 import 'package:admin_world/const/colors.dart';
 import 'package:admin_world/const/images.dart';
 import 'package:admin_world/const/strings.dart';
 import 'package:admin_world/home/main_screen.dart';
-import 'package:flutter/material.dart';
+import 'package:admin_world/widgets/profile.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
@@ -48,7 +50,7 @@ class DashboardScreen extends StatelessWidget {
       child: Stack(
         children: [
           Padding(
-            padding: const EdgeInsets.only(top: _paddingTop),
+            padding: EdgeInsets.only(top: _paddingTop),
             child: Container(
               width: screenWidth * _sizeRatio,
               height: screenHeight * _sizeRatio,
@@ -82,104 +84,14 @@ class DashboardScreen extends StatelessWidget {
       color: Colors.white,
       child: Column(
         children: [
-          _buildProfileSection(),
-          Expanded(child: _buildTransactionList()),
+          ProfileSection(),
+          Expanded(
+            child: TransactionList(
+                showOnlySent: false,
+                showOnlyReceived: false), // Show all transactions
+          ),
         ],
       ),
-    );
-  }
-
-  Widget _buildProfileSection() {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildProfileHeader(),
-          const SizedBox(height: 8.0),
-          _buildProfileInfo(),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildProfileHeader() {
-    return const Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        CircleAvatar(
-          radius: 30.0,
-          backgroundImage: AssetImage('assets/images/profile_image.png'),
-        ),
-        Icon(Icons.settings, color: Colors.grey),
-      ],
-    );
-  }
-
-  Widget _buildProfileInfo() {
-    return const Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Aleem Sheikh',
-          style: boldTextStyle,
-        ),
-        Text(
-          'Admin',
-          style: normalTextStyle,
-        ),
-        SizedBox(height: 40),
-        Text("All Transactions", style: boldTextStyle),
-        SizedBox(height: 20),
-        Text("Today", style: normalTextStyle),
-      ],
-    );
-  }
-
-  Widget _buildTransactionList() {
-    final transactions = [
-      _buildTransactionItem(
-          'Sent', 'Rs. 360', Colors.red, Icons.call_made, const Color(0xFFFFC0C0)),
-      _buildTransactionItem('Received', 'Rs. 360', Colors.green,
-          Icons.call_received, const Color(0xFFAFFDC3)),
-      _buildTransactionItem('Received', 'Rs. 360', Colors.green,
-          Icons.call_received, const Color(0xFFAFFDC3)),
-      _buildTransactionItem(
-          'Sent', 'Rs. 360', Colors.red, Icons.call_made, const Color(0xFFFFC0C0)),
-      _buildTransactionItem(
-          'Sent', 'Rs. 360', Colors.red, Icons.call_made, const Color(0xFFFFC0C0)),
-      const Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Text("Yesterday", style: boldTextStyle),
-      ),
-      _buildTransactionItem(
-          'Sent', 'Rs. 360', Colors.red, Icons.call_made, const Color(0xFFFFC0C0)),
-      _buildTransactionItem(
-          'Sent', 'Rs. 360', Colors.red, Icons.call_made, const Color(0xFFFFC0C0)),
-      _buildTransactionItem('Received', 'Rs. 360', Colors.green,
-          Icons.call_received, const Color(0xFFAFFDC3)),
-      const Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Text(
-          'See More >',
-          style: boldTextStyle,
-        ),
-      ),
-    ];
-
-    return ListView(children: transactions);
-  }
-
-  Widget _buildTransactionItem(String subtitle, String trailing,
-      Color iconColor, IconData icon, Color backgroundColor) {
-    return ListTile(
-      leading: CircleAvatar(
-        backgroundColor: backgroundColor,
-        child: Icon(icon, color: iconColor),
-      ),
-      title: const Text('Aleem Sheikh', style: boldTextStyle),
-      subtitle: Text(subtitle, style: smallTextStyle),
-      trailing: Text(trailing, style: smallTextStyle),
     );
   }
 }

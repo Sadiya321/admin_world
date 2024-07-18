@@ -9,6 +9,15 @@ const TextStyle normalTextStyle = TextStyle(
   decoration: TextDecoration.none,
 );
 
+
+const TextStyle blacksmallTextStyle = TextStyle(
+  fontSize: 10,
+  fontFamily: 'Poppins',
+  fontWeight: FontWeight.normal,
+  color: AppColor.textPrimary,
+  decoration: TextDecoration.none,
+);
+
 const TextStyle smallTextStyle = TextStyle(
   fontSize: 12,
   fontFamily: 'Poppins',
@@ -25,6 +34,27 @@ const TextStyle smallwhiteTextStyle = TextStyle(
   decoration: TextDecoration.none,
 );
 
+const TextStyle largewhiteTextStyle = TextStyle(
+  fontSize: 14,
+  fontFamily: 'Poppins',
+  fontWeight: FontWeight.w400,
+  color: AppColor.textLight,
+  decoration: TextDecoration.none,
+);
+const TextStyle smallscreenwhiteTextStyle = TextStyle(
+  fontSize: 8,
+  fontFamily: 'Poppins',
+  fontWeight: FontWeight.normal,
+  color: AppColor.textLight,
+  decoration: TextDecoration.none,
+);
+const TextStyle smallboldwhiteTextStyle = TextStyle(
+  fontSize: 12,
+  fontFamily: 'Poppins',
+  fontWeight: FontWeight.w600,
+  color: AppColor.textLight,
+  decoration: TextDecoration.none,
+);
 
 const TextStyle boldTextStyle = TextStyle(
   fontSize: 14,

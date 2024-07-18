@@ -6,10 +6,7 @@ import 'package:admin_world/home/drawer_screen/transaction_screen/transaction_sc
 import 'package:admin_world/home/drawer_screen/users_screen/users_screen.dart';
 import 'package:admin_world/const/images.dart';
 import 'package:admin_world/home/login_screen/login_screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class AdminView extends StatefulWidget {
   final String documentId;
@@ -25,6 +22,7 @@ class AdminView extends StatefulWidget {
 class _AdminViewState extends State<AdminView> {
   String _selectedItem = '';
   String selectedContent = 'Dashboard';
+
   void onDrawerItemClicked(String content) {
     setState(() {
       selectedContent = content;
@@ -48,10 +46,8 @@ class _AdminViewState extends State<AdminView> {
         if (constraints.maxWidth < 600) {
           return Scaffold(
             appBar: AppBar(
-              title: const Text('DashBoard',style:boldTextStyle),
+              title: const Text('DashBoard', style: boldTextStyle),
             ),
-            ///////////////////////// // small screen drawer /////////////////////////
-
             drawer: Drawer(
               child: Container(
                 width: 100,
@@ -101,7 +97,7 @@ class _AdminViewState extends State<AdminView> {
                       height: 25,
                     ),
                     buildDrawerItem(Icons.dashboard, 'Dashboard', () {
-                      const TransactionScreen();
+                      onDrawerItemClicked('Dashboard');
                     }),
                     const SizedBox(
                       height: 10,
@@ -124,10 +120,13 @@ class _AdminViewState extends State<AdminView> {
                     const SizedBox(
                       height: 10,
                     ),
-                    buildDrawerItem(Icons.logout_rounded, 'Logout', () {
-                      onDrawerItemClicked('Log Out');
+                    buildDrawerItem(Icons.logout_rounded, 'Logout', () async {
+                      bool? confirmed = await showLogoutConfirmationDialog(context);
+                      if (confirmed == true) {
+                        await _signOut();
+                      }
                     }),
-                    SizedBox(
+                    const SizedBox(
                       height: 40,
                     ),
                     Padding(
@@ -145,10 +144,7 @@ class _AdminViewState extends State<AdminView> {
           );
         } else {
           return Scaffold(
-            body:
-                ///////////////////////// // full screen drawer /////////////////////////
-
-                Row(
+            body: Row(
               children: [
                 Container(
                   width: 240,
@@ -157,19 +153,18 @@ class _AdminViewState extends State<AdminView> {
                     color: AppColor.textLight,
                   ),
                   child: Column(
-                    // crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       const SizedBox(
                         width: double.infinity,
                         child: Padding(
                           padding: EdgeInsets.only(top: 28.0, left: 19),
                           child: Row(
-                            // mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
                                 "Green",
                                 style: TextStyle(
-                                  fontSize: 22,fontFamily: 'Poppins',
+                                  fontSize: 22,
+                                  fontFamily: 'Poppins',
                                   fontWeight: FontWeight.bold,
                                   color: AppColor.primary,
                                   decoration: TextDecoration.none,
@@ -182,7 +177,7 @@ class _AdminViewState extends State<AdminView> {
                                 "World",
                                 style: TextStyle(
                                   fontSize: 22,
-                               fontFamily: 'Poppins',
+                                  fontFamily: 'Poppins',
                                   fontWeight: FontWeight.bold,
                                   color: AppColor.textPrimary,
                                   decoration: TextDecoration.none,
@@ -219,8 +214,11 @@ class _AdminViewState extends State<AdminView> {
                       const SizedBox(
                         height: 15,
                       ),
-                      buildDrawerItem(Icons.logout_rounded, 'Logout', () {
-                        onDrawerItemClicked('Log Out');
+                      buildDrawerItem(Icons.logout_rounded, 'Logout', () async {
+                        bool? confirmed = await showLogoutConfirmationDialog(context);
+                        if (confirmed == true) {
+                          await _signOut();
+                        }
                       }),
                       const SizedBox(
                         height: 40,
@@ -237,7 +235,6 @@ class _AdminViewState extends State<AdminView> {
                 ),
               ],
             ),
-            ///////////////////////// // full screen drawer /////////////////////////
           );
         }
       },
@@ -249,23 +246,23 @@ class _AdminViewState extends State<AdminView> {
       case 'Dashboard':
         return const DashboardScreen();
       case 'Users':
-        return const UserScreen();
+        return UserScreen();
       case 'Sellers':
-        return const SellerScreen();
+        return const SellerScreen(
+          sellers: [],
+        );
       case 'Transaction':
         return const TransactionScreen();
-        
       default:
         return buildDefaultContent();
     }
-    
-  }
-   Widget buildDefaultContent() {
-    return const Text('Select an item from the drawer to view content.',style:boldTextStyle);
   }
 
+  Widget buildDefaultContent() {
+    return const Text('Select an item from the drawer to view content.',
+        style: boldTextStyle);
+  }
 
- 
   Widget buildDrawerItem(IconData icon, String title, VoidCallback onTap) {
     bool isSelected = _selectedItem == title;
 
@@ -279,10 +276,10 @@ class _AdminViewState extends State<AdminView> {
         title: Text(
           title,
           style: TextStyle(
-             fontSize: 16,
-  fontFamily: 'Poppins',
-  fontWeight: FontWeight.w500,
-  decoration: TextDecoration.none,
+            fontSize: 16,
+            fontFamily: 'Poppins',
+            fontWeight: FontWeight.w500,
+            decoration: TextDecoration.none,
             color: isSelected ? AppColor.primary : AppColor.textPrimary,
           ),
         ),
@@ -290,7 +287,7 @@ class _AdminViewState extends State<AdminView> {
           setState(() {
             _selectedItem = title;
           });
-          if (title == 'Log Out') {
+          if (title == 'Logout') {
             bool? confirmed = await showLogoutConfirmationDialog(context);
             if (confirmed == true) {
               await _signOut();
@@ -303,26 +300,26 @@ class _AdminViewState extends State<AdminView> {
     );
   }
 
-   Future<bool?> showLogoutConfirmationDialog(BuildContext context) async {
+  Future<bool?> showLogoutConfirmationDialog(BuildContext context) async {
     return showDialog<bool?>(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Logout Confirmation',style:normalTextStyle),
-          content: const Text('Are you sure you want to log out?',style:normalTextStyle),
+          title: const Text('Logout Confirmation', style: normalTextStyle),
+          content: const Text('Are you sure you want to log out?',
+              style: normalTextStyle),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(false);
               },
-              child: const Text('No',style:normalTextStyle),
+              child: const Text('No', style: normalTextStyle),
             ),
             TextButton(
-              onPressed: () async {
+              onPressed: () {
                 Navigator.of(context).pop(true);
-                await _signOut();
               },
-              child: const Text('Yes',style:normalTextStyle),
+              child: const Text('Yes', style: normalTextStyle),
             ),
           ],
         );
@@ -330,4 +327,3 @@ class _AdminViewState extends State<AdminView> {
     );
   }
 }
-
