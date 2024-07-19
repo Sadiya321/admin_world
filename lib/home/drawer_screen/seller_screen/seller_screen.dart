@@ -1,7 +1,8 @@
 import 'package:admin_world/const/colors.dart';
 import 'package:admin_world/const/images.dart';
 import 'package:admin_world/const/strings.dart';
-import 'package:admin_world/widgets/table_screen.dart';
+import 'package:admin_world/home/drawer_screen/storing_sellers/storing_sellers.dart';
+import 'package:admin_world/widgets/storing_user.dart';
 import 'package:flutter/material.dart';
 
 class SellerScreen extends StatelessWidget {
@@ -62,8 +63,8 @@ class SellerScreen extends StatelessWidget {
                 width: double.infinity,
                 height: double.infinity,
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
+              const Padding(
+                padding: EdgeInsets.all(28.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -74,7 +75,7 @@ class SellerScreen extends StatelessWidget {
                     ),
                     SizedBox(height: 10),
                     Expanded(
-                      child: TablesScreen(), // Convert sellers to users here
+                      child: StoringSellersScreen(), // Convert sellers to users here
                     ),
                   ],
                 ),

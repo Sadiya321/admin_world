@@ -1,7 +1,7 @@
 import 'package:admin_world/const/colors.dart';
 import 'package:admin_world/const/images.dart';
 import 'package:admin_world/const/strings.dart';
-import 'package:admin_world/widgets/table_screen.dart';
+import 'package:admin_world/widgets/storing_user.dart';
 import 'package:flutter/material.dart';
 
 class UserScreen extends StatelessWidget {
@@ -63,7 +63,7 @@ class UserScreen extends StatelessWidget {
                 height: double.infinity,
               ),
               const Padding(
-                padding: EdgeInsets.all(48.0),
+                  padding: const EdgeInsets.all(28.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -74,7 +74,7 @@ class UserScreen extends StatelessWidget {
                     ),
                     SizedBox(height: 10),
                     Expanded(
-                      child: TablesScreen(),
+                      child: StoringUserScreen(),
                     ),
                   ],
                 ),

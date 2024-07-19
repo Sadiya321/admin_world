@@ -2,9 +2,12 @@ import 'package:admin_world/background_widget.dart';
 import 'package:admin_world/const/colors.dart';
 import 'package:admin_world/const/images.dart';
 import 'package:admin_world/const/strings.dart';
+import 'package:admin_world/controller/auth_controller.dart';
+import 'package:admin_world/home/drawer_screen/admin_view.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:pinput/pinput.dart'; // Import the Pinput package
+import 'package:get/get.dart';
+import 'package:pinput/pinput.dart';
 
 class LoginsScreen extends StatefulWidget {
   const LoginsScreen({Key? key}) : super(key: key);
@@ -19,6 +22,8 @@ class _LoginsScreenState extends State<LoginsScreen> {
   late final FocusNode focusNode;
   late final GlobalKey<FormState> formKey;
   final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _otpController = TextEditingController();
+  final AuthController authController = Get.put(AuthController());
   CountryCode _selectedCountry = CountryCode(
     code: 'IN',
     dialCode: '+91',
@@ -129,24 +134,22 @@ class _LoginsScreenState extends State<LoginsScreen> {
                                       showOnlyCountryWhenClosed: false,
                                       alignLeft: false,
                                     ),
-                                    suffixIcon:
-                                        _phoneController.text.length > 9
-                                            ? Container(
-                                                height: 30,
-                                                width: 30,
-                                                margin:
-                                                    const EdgeInsets.all(10.0),
-                                                decoration: const BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                  color: Colors.green,
-                                                ),
-                                                child: const Icon(
-                                                  Icons.done,
-                                                  color: Colors.white,
-                                                  size: 20,
-                                                ),
-                                              )
-                                            : null,
+                                    suffixIcon: _phoneController.text.length > 9
+                                        ? Container(
+                                            height: 30,
+                                            width: 30,
+                                            margin: const EdgeInsets.all(10.0),
+                                            decoration: const BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: Colors.green,
+                                            ),
+                                            child: const Icon(
+                                              Icons.done,
+                                              color: Colors.white,
+                                              size: 20,
+                                            ),
+                                          )
+                                        : null,
                                     hintText: "Enter Phone number",
                                     labelText: "Enter Phone number",
                                   ),
@@ -154,30 +157,31 @@ class _LoginsScreenState extends State<LoginsScreen> {
                               ),
                             ),
                           ],
-                        ),const Padding(
-                      padding: EdgeInsets.only(right: 15.0, left: 20),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Phone number must be 10 digits',
-                            style: blacksmallTextStyle,
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.only(right: 15.0, left: 20),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Phone number must be 10 digits',
+                                style: blacksmallTextStyle,
+                              ),
+                              // Obx(
+                              //   () => Text(
+                              //     '${authController.phoneNo.value.length}/10',
+                              //     style: const TextStyle(
+                              //       fontSize: 12,
+                              //       fontFamily: regular,
+                              //       fontWeight: FontWeight.normal,
+                              //       color: AppColor.textPrimary,
+                              //       decoration: TextDecoration.none,
+                              //     ),
+                              //   ),
+                              // ),
+                            ],
                           ),
-                          // Obx(
-                          //   () => Text(
-                          //     '${authController.phoneNo.value.length}/10',
-                          //     style: const TextStyle(
-                          //       fontSize: 12,
-                          //       fontFamily: regular,
-                          //       fontWeight: FontWeight.normal,
-                          //       color: AppColor.textPrimary,
-                          //       decoration: TextDecoration.none,
-                          //     ),
-                          //   ),
-                          // ),
-                        ],
-                      ),
-                    ),
+                        ),
                         const SizedBox(height: 30),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
@@ -185,7 +189,12 @@ class _LoginsScreenState extends State<LoginsScreen> {
                             Padding(
                               padding: const EdgeInsets.only(right: 4.0),
                               child: ElevatedButton(
-                                onPressed: () {},
+                                onPressed: () async {
+                                  String phoneNumber =
+                                      _selectedCountry.dialCode! +
+                                          _phoneController.text;
+                                  await authController.sendOTP(phoneNumber);
+                                },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: AppColor.primary,
                                   padding: const EdgeInsets.symmetric(
@@ -205,21 +214,17 @@ class _LoginsScreenState extends State<LoginsScreen> {
                             ),
                           ],
                         ),
-                        const SizedBox(height: 35),
+                        const SizedBox(height: 5),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Pinput(
                               length: 6,
-                              controller: pinController,
-                              focusNode: focusNode,
+                              controller: _otpController,
+                              focusNode: FocusNode(),
                               defaultPinTheme: defaultPinTheme,
-                              validator: (value) {
-                                return value == '222222'
-                                    ? null
-                                    : 'Pin is incorrect';
-                              },
-                              hapticFeedbackType: HapticFeedbackType.lightImpact,
+                              hapticFeedbackType:
+                                  HapticFeedbackType.lightImpact,
                               onCompleted: (pin) {
                                 debugPrint('onCompleted: $pin');
                               },
@@ -244,12 +249,11 @@ class _LoginsScreenState extends State<LoginsScreen> {
                                 ),
                               ),
                               submittedPinTheme: defaultPinTheme.copyWith(
-                                decoration: defaultPinTheme.decoration!
-                                    .copyWith(
+                                decoration:
+                                    defaultPinTheme.decoration!.copyWith(
                                   color: fillColor,
                                   borderRadius: BorderRadius.circular(19),
-                                  border:
-                                      Border.all(color: focusedBorderColor),
+                                  border: Border.all(color: focusedBorderColor),
                                 ),
                               ),
                               errorPinTheme: defaultPinTheme.copyBorderWith(
@@ -258,7 +262,7 @@ class _LoginsScreenState extends State<LoginsScreen> {
                             ),
                           ],
                         ),
-                        const SizedBox(height: 16),
+                        const SizedBox(height: 6),
                         TextButton(
                           onPressed: () {
                             // Resend OTP logic
@@ -270,8 +274,22 @@ class _LoginsScreenState extends State<LoginsScreen> {
                         ),
                         const SizedBox(height: 10),
                         ElevatedButton(
-                          onPressed: () {
-                            // Submit OTP logic
+                          onPressed: () async {
+                            bool isVerified = await authController.verifyOTP(_otpController.text);
+
+                            if (isVerified) {
+                              // Navigate to another screen or show success message
+                              Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const AdminView(documentId: '',)));
+                              // Get.to(const AdminView(
+                              //   documentId: '',
+                              // ));
+                            } else {
+                              // Show error message
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(content: Text("Invalid OTP")));
+                            }
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: AppColor.primary,
